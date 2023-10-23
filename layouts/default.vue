@@ -6,7 +6,7 @@
         <Nuxt />
       </v-container>
     </v-main>
-    <Footer />    
+    <!-- <Footer /> -->
   </v-app>
 </template>
 
@@ -21,3 +21,22 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+.v-application{
+  line-height: normal !important;
+}
+.v-btn{
+  text-transform: none;
+  &.mibancoprimary{
+    .v-btn__content{
+      color: #ffffff;
+    }
+  }
+}
+.v-text-field--filled > .v-input__control > .v-input__slot, .v-text-field--full-width > .v-input__control > .v-input__slot, .v-text-field--outlined > .v-input__control > .v-input__slot{
+  min-height: 48px;
+}
+.v-input--is-disabled {
+  background-color: rgba(226, 230, 235, 1);
+}
+</style>
