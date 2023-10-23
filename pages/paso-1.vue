@@ -158,7 +158,7 @@
           </v-text-field>
         </div>
       </div>
-      <v-btn width="100%" rounded color="mibancoprimary" height="38" @click="$router.push('/step-2')">Continuar</v-btn>
+      <v-btn width="100%" rounded color="mibancoprimary" height="38" @click="$router.push('/paso-2')">Continuar</v-btn>
     </v-col>
   </v-row>
 </template>
