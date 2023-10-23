@@ -25,18 +25,34 @@
       <div class="step-2-section-3">
         <span style="font-size: 14px; font-weight: 500;">Selecciona tu estado Civil <span style="font-size: 12px; font-weight: 600;" class="mibancoprimary--text">(recuerda que debe ser igual a tu DNI)*</span></span>
         <div>
-          <v-select
-            :items="['3 meses', '6 meses', '9 meses', '12 meses']"
-            height="48"
-            label="Selecciona tu opción aquí"
-            single-line
-            hide-details
-            outlined
-          >
-            <template v-slot:append>
-              <v-icon>mdi-chevron-down</v-icon>
+          <v-dialog
+            v-model="dialogEC"
+            width="350">
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field
+                v-bind="attrs"
+                v-on="on"
+                label="Selecciona tu opción aquí"
+                height="48"
+                single-line
+                hide-details
+                readonly
+                outlined>
+                  <template v-slot:append>
+                    <v-icon>mdi-chevron-down</v-icon>
+                  </template>
+              </v-text-field>
             </template>
-          </v-select>
+            <v-card>
+                <v-card-title class="d-flex justify-space-between px-4" @click="dialogEC=false">
+                  <h5>Selecciona tu estado civil</h5>
+                  <v-icon>mdi-close</v-icon>
+                </v-card-title>
+                <v-card-text class="px-4">
+                  <RadioCustom :dataRadio="dataEC" :defaultRadio="defaultEC"/>
+                </v-card-text>
+            </v-card>
+          </v-dialog>
         </div>
         <div>
           <div class="d-flex align-center justify-space-between">
@@ -60,19 +76,69 @@
           <RadioCustom :dataRadio="dataChildren" :defaultRadio="defaultChildren"/>
         </div>
         <div>
-          <label class="mb-1 font-weight-medium" style="font-size: 14px;">Tipo de vivienda*</label>
-          <v-select
-            :items="['3 meses', '6 meses', '9 meses', '12 meses']"
-            height="48"
-            label="Selecciona tu opción aquí"
-            single-line
-            hide-details
-            outlined
-          >
-            <template v-slot:append>
-              <v-icon>mdi-chevron-down</v-icon>
+          <div class="d-flex align-center justify-space-between">
+            <label class="mb-1 font-weight-medium" style="font-size: 14px;">Número de hijos*</label>
+            <v-icon color="mibancoprimary">mdi-information-outline</v-icon>
+          </div>
+          <v-dialog
+            v-model="dialogCC"
+            width="350">
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field
+                v-bind="attrs"
+                v-on="on"
+                label="Número de hijos que dependan de ti"
+                height="48"
+                single-line
+                hide-details
+                readonly
+                outlined>
+                  <template v-slot:append>
+                    <v-icon>mdi-chevron-down</v-icon>
+                  </template>
+              </v-text-field>
             </template>
-          </v-select>
+            <v-card>
+                <v-card-title class="d-flex justify-space-between px-4" @click="dialogCC=false">
+                  <h5>Número de hijos</h5>
+                  <v-icon>mdi-close</v-icon>
+                </v-card-title>
+                <v-card-text class="px-4">
+                  <RadioCustom :dataRadio="dataCC" :defaultRadio="defaultCC"/>
+                </v-card-text>
+            </v-card>
+          </v-dialog>
+        </div>
+        <div>
+          <label class="mb-1 font-weight-medium" style="font-size: 14px;">Tipo de vivienda*</label>
+          <v-dialog
+            v-model="dialogTV"
+            width="350">
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field
+                v-bind="attrs"
+                v-on="on"
+                label="Selecciona tu opción aquí"
+                height="48"
+                single-line
+                hide-details
+                readonly
+                outlined>
+                  <template v-slot:append>
+                    <v-icon>mdi-chevron-down</v-icon>
+                  </template>
+              </v-text-field>
+            </template>
+            <v-card>
+                <v-card-title class="d-flex justify-space-between px-4" @click="dialogTV=false">
+                  <h5>Tipo de Vivienda</h5>
+                  <v-icon>mdi-close</v-icon>
+                </v-card-title>
+                <v-card-text class="px-4">
+                  <RadioCustom :dataRadio="dataTV" :defaultRadio="defaultTV"/>
+                </v-card-text>
+            </v-card>
+          </v-dialog>
         </div>
         <div>
           <label class="mb-1 font-weight-medium" style="font-size: 14px;">Selecciona tu tipo de actividad*</label>
@@ -154,7 +220,32 @@ export default {
         {label: 'Tengo un Negocio', value: "Tengo un Negocio"},
         {label: 'Trabajo para una empresa', value: "Trabajo para una empresa"}
       ],
-      defaultTypeActivity: "Tengo un Negocio"
+      defaultTypeActivity: "Tengo un Negocio",
+      dataEC: [
+        {label: "Solter@", value:"Solter@"},
+        {label: "Casad@", value:"Casad@"},
+        {label: "Viud@", value:"Viud@"},
+        {label: "Divorciad@", value:"Divorciad@"},
+      ],
+      defaultEC: "Solter@",
+      dialogEC: false,
+      dataCC: [
+        {label: "1", value:"1"},
+        {label: "2", value:"2"},
+        {label: "3", value:"3"},
+        {label: "4", value:"4"},
+        {label: "5", value:"5"},
+        {label: "6 a más", value:"6 a más"}
+      ],
+      defaultCC: "1",
+      dialogCC: false,
+      dataTV: [
+        {label: "Propia", value:"Propia"},
+        {label: "Alquilada", value:"Alquilada"},
+        {label: "Alojado en casa de familia", value:"Alojado en casa de familia"}
+      ],
+      defaultTV: "Propia",
+      dialogTV: false,
     }
   }
 }
