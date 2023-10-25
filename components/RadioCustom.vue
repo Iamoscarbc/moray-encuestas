@@ -12,14 +12,16 @@
 
 <script>
 export default {
-    props: ["dataRadio", "defaultRadio"],
-    data(){
-        return {
-            radioGroup: null
+    props: ["dataRadio", "value"],
+    computed:{
+        radioGroup: {
+            get(){
+                return this.value
+            },
+            set(newVal){
+                this.$emit('changeValue', newVal)
+            }
         }
-    },
-    mounted(){
-        this.radioGroup = this.defaultRadio
     }
 }
 </script>

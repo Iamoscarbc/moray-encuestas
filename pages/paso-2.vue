@@ -30,6 +30,7 @@
             width="350">
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
+                :value="valueEC"
                 v-bind="attrs"
                 v-on="on"
                 label="Selecciona tu opción aquí"
@@ -49,7 +50,7 @@
                   <v-icon>mdi-close</v-icon>
                 </v-card-title>
                 <v-card-text class="px-4">
-                  <RadioCustom :dataRadio="dataEC" :defaultRadio="defaultEC"/>
+                  <RadioCustom @changeValue="changeValueEC" :dataRadio="dataEC" :value="valueEC"/>
                 </v-card-text>
             </v-card>
           </v-dialog>
@@ -73,9 +74,9 @@
         </div>
         <div>
           <label class="mb-1 font-weight-medium" style="font-size: 14px;">¿Tienes hijos?*</label>
-          <RadioCustom :dataRadio="dataChildren" :defaultRadio="defaultChildren"/>
+          <RadioCustom @changeValue="changeValueChildren" :dataRadio="dataChildren" :value="valueChildren"/>
         </div>
-        <div>
+        <div v-if="valueChildren == 'Sí'">
           <div class="d-flex align-center justify-space-between">
             <label class="mb-1 font-weight-medium" style="font-size: 14px;">Número de hijos*</label>
             <v-icon color="mibancoprimary">mdi-information-outline</v-icon>
@@ -85,6 +86,7 @@
             width="350">
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
+                :value="valueCC"
                 v-bind="attrs"
                 v-on="on"
                 label="Número de hijos que dependan de ti"
@@ -104,7 +106,7 @@
                   <v-icon>mdi-close</v-icon>
                 </v-card-title>
                 <v-card-text class="px-4">
-                  <RadioCustom :dataRadio="dataCC" :defaultRadio="defaultCC"/>
+                  <RadioCustom @changeValue="changeValueCC" :dataRadio="dataCC" :value="valueCC"/>
                 </v-card-text>
             </v-card>
           </v-dialog>
@@ -116,6 +118,7 @@
             width="350">
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
+                :value="valueTV"
                 v-bind="attrs"
                 v-on="on"
                 label="Selecciona tu opción aquí"
@@ -135,17 +138,17 @@
                   <v-icon>mdi-close</v-icon>
                 </v-card-title>
                 <v-card-text class="px-4">
-                  <RadioCustom :dataRadio="dataTV" :defaultRadio="defaultTV"/>
+                  <RadioCustom @changeValue="changeValueTV" :dataRadio="dataTV" :value="valueTV"/>
                 </v-card-text>
             </v-card>
           </v-dialog>
         </div>
         <div>
           <label class="mb-1 font-weight-medium" style="font-size: 14px;">Selecciona tu tipo de actividad*</label>
-          <RadioCustom :dataRadio="dataTypeActivity" :defaultRadio="defaultTypeActivity"/>
+          <RadioCustom @changeValue="changeValueTypeActivity" :dataRadio="dataTypeActivity" :value="valueTypeActivity"/>
         </div>
-        <h3 class="mibancoprimary--text">Datos del cónyuge</h3>
-        <div class="d-flex justify-space-between">
+        <h3 class="mibancoprimary--text" v-if="valueEC != 'Solter@'">Datos del cónyuge</h3>
+        <div class="d-flex justify-space-between" v-if="valueEC != 'Solter@'">
           <div style="width: 30%;">
             <label class="mb-1 font-weight-medium" style="font-size: 14px;">Documento</label>
             <v-text-field
@@ -168,7 +171,7 @@
             </v-text-field>
           </div>
         </div>
-        <div>
+        <div v-if="valueEC != 'Solter@'">
           <label class="mb-1 font-weight-medium" style="font-size: 14px;">Nombres* </label>
           <v-text-field
             label="Nombres"
@@ -179,7 +182,7 @@
           >
           </v-text-field>
         </div>
-        <div>
+        <div v-if="valueEC != 'Solter@'">
           <label class="mb-1 font-weight-medium" style="font-size: 14px;">Apellidos*</label>
           <v-text-field
             label="Apellidos"
@@ -209,25 +212,42 @@ export default {
     Step,
     RadioCustom
   },
+  methods: {
+    changeValueEC($event){
+      this.valueEC = $event
+    },
+    changeValueChildren($event){
+      this.valueChildren = $event
+    },
+    changeValueCC($event){
+      this.valueCC = $event
+    },
+    changeValueTV($event){
+      this.valueTV = $event
+    },
+    changeValueTypeActivity($event){
+      this.valueTypeActivity = $event
+    }
+  },
   data(){
     return {
       dataChildren: [
         {label: 'Sí', value: true},
         {label: 'No', value: false}
       ],
-      defaultChildren: false,
+      valueChildren: false,
       dataTypeActivity: [
         {label: 'Tengo un Negocio', value: "Tengo un Negocio"},
         {label: 'Trabajo para una empresa', value: "Trabajo para una empresa"}
       ],
-      defaultTypeActivity: "Tengo un Negocio",
+      valueTypeActivity: "Tengo un Negocio",
       dataEC: [
         {label: "Solter@", value:"Solter@"},
         {label: "Casad@", value:"Casad@"},
         {label: "Viud@", value:"Viud@"},
         {label: "Divorciad@", value:"Divorciad@"},
       ],
-      defaultEC: "Solter@",
+      valueEC: "Solter@",
       dialogEC: false,
       dataCC: [
         {label: "1", value:"1"},
@@ -237,14 +257,14 @@ export default {
         {label: "5", value:"5"},
         {label: "6 a más", value:"6 a más"}
       ],
-      defaultCC: "1",
+      valueCC: "1",
       dialogCC: false,
       dataTV: [
         {label: "Propia", value:"Propia"},
         {label: "Alquilada", value:"Alquilada"},
         {label: "Alojado en casa de familia", value:"Alojado en casa de familia"}
       ],
-      defaultTV: "Propia",
+      valueTV: "Propia",
       dialogTV: false,
     }
   }
