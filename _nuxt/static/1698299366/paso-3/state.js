@@ -1,0 +1,1 @@
+window.__NUXT__=(function(a){return {staticAssetsBase:"\u002Fmoray-encuestas\u002F_nuxt\u002Fstatic\u002F1698299366",layout:"default",error:a,serverRendered:true,routePath:"\u002Fpaso-3",config:{_app:{basePath:"\u002Fmoray-encuestas\u002F",assetsPath:"\u002Fmoray-encuestas\u002F_nuxt\u002F",cdnURL:a}}}}(null));
