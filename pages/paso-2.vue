@@ -30,6 +30,7 @@
             width="350">
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
+                color="mibancoprimary"
                 :value="valueEC"
                 v-bind="attrs"
                 v-on="on"
@@ -60,23 +61,47 @@
             <label class="mb-1 font-weight-medium" style="font-size: 14px;">Fecha de nacimiento*</label>
             <v-icon color="mibancoprimary">mdi-information-outline</v-icon>
           </div>
-          <v-text-field
-            label="Ingresa tu fecha de nacimiento"
-            height="48"
-            single-line
-            hide-details
-            outlined
+          <v-menu
+            ref="menu"
+            v-model="menu"
+            :close-on-content-click="false"
+            transition="scale-transition"
+            offset-y
+            min-width="auto"
           >
-            <template v-slot:append>
-              <v-icon color="mibancoprimary">mdi-calendar-month-outline</v-icon>
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field
+                :value="dateFormatted"
+                label="Ingresa tu fecha de nacimiento"
+                color="mibancoprimary"
+                height="48"
+                single-line
+                hide-details
+                outlined
+                readonly
+                v-bind="attrs"
+                v-on="on"
+              >
+                <template v-slot:append>
+                  <v-icon color="mibancoprimary">mdi-calendar-month-outline</v-icon>
+                </template>
+              </v-text-field>
             </template>
-          </v-text-field>
+            <v-date-picker
+              color="mibancoprimary"
+              v-model="date"
+              :active-picker.sync="activePicker"
+              :max="maxDate"
+              @change="save"
+              min="1950-01-01"
+            ></v-date-picker>
+          </v-menu>
         </div>
         <div>
           <label class="mb-1 font-weight-medium" style="font-size: 14px;">¿Tienes hijos?*</label>
           <RadioCustom @changeValue="changeValueChildren" :dataRadio="dataChildren" :value="valueChildren"/>
         </div>
-        <div v-if="valueChildren == 'Sí'">
+        <div v-if="!!valueChildren">
           <div class="d-flex align-center justify-space-between">
             <label class="mb-1 font-weight-medium" style="font-size: 14px;">Número de hijos*</label>
             <v-icon color="mibancoprimary">mdi-information-outline</v-icon>
@@ -86,6 +111,7 @@
             width="350">
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
+                color="mibancoprimary"
                 :value="valueCC"
                 v-bind="attrs"
                 v-on="on"
@@ -212,25 +238,11 @@ export default {
     Step,
     RadioCustom
   },
-  methods: {
-    changeValueEC($event){
-      this.valueEC = $event
-    },
-    changeValueChildren($event){
-      this.valueChildren = $event
-    },
-    changeValueCC($event){
-      this.valueCC = $event
-    },
-    changeValueTV($event){
-      this.valueTV = $event
-    },
-    changeValueTypeActivity($event){
-      this.valueTypeActivity = $event
-    }
-  },
   data(){
     return {
+      menu: false,
+      activePicker: null,
+      maxDate: null,
       dataChildren: [
         {label: 'Sí', value: true},
         {label: 'No', value: false}
@@ -266,7 +278,43 @@ export default {
       ],
       valueTV: "Propia",
       dialogTV: false,
+      date: null
     }
+  },
+  watch: {
+    menu (val) {
+      val && setTimeout(() => (this.activePicker = 'YEAR'))
+    }
+  },
+  methods: {
+    changeValueEC($event){
+      this.valueEC = $event
+    },
+    changeValueChildren($event){
+      this.valueChildren = $event
+    },
+    changeValueCC($event){
+      this.valueCC = $event
+    },
+    changeValueTV($event){
+      this.valueTV = $event
+    },
+    changeValueTypeActivity($event){
+      this.valueTypeActivity = $event
+    },
+    save (date) {
+      this.$refs.menu.save(date)
+    },
+  },
+  computed:{
+    dateFormatted(){
+      return this.date ? this.$moment(this.date).format('DD/MM/YYYY') : ''
+    }
+  },
+  mounted(){
+    const fechaActual = new Date()
+    fechaActual.setFullYear(fechaActual.getFullYear() - 18)
+    this.maxDate = fechaActual.toISOString().substr(0, 10)
   }
 }
 </script>

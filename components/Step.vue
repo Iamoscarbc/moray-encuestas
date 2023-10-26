@@ -27,5 +27,11 @@ export default {
   &.step-2{
     padding: 16px;
   }
+  &.step-3{
+    padding: 16px;
+  }
+  &.step-4{
+    padding: 16px;
+  }
 }
 </style>
