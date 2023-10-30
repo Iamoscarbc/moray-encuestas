@@ -3,7 +3,7 @@
     <v-col cols="12">
       <WarningAlert/>
       <h2 class="mibancoaccent--text text-center">Préstamo Mi efectivo <br>Semilla 💰</h2>
-      <Step :step="1"/>
+      <Step :step="1" :text="'Completa tu<br>información personal'"/>
       <div class="step-1-section-1">
         <div>
           <label class="mb-1 font-weight-medium" style="font-size: 14px;">Monto a solicitar*</label>

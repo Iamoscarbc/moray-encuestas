@@ -3,8 +3,8 @@
     <v-col cols="12">
       <WarningAlert/>
       <h2 class="mibancoaccent--text text-center">Préstamo Mi efectivo <br>Semilla 💰</h2>
-      <Step :step="3" :text="'¡Listo este es el último paso! Ahora completa la información <br>de tu negocio o trabajo'"/>
-      <div class="step-3-section-1">
+      <Step :step="4" :text="'Por último, ayúdanos a validar tu negocio'"/>
+      <div class="step-4-section-1">
         <div>
           <label class="mb-1 font-weight-medium" style="font-size: 14px;">Monto a solicitar*</label>
           <v-text-field
@@ -17,13 +17,13 @@
           ></v-text-field>
         </div>
       </div>
-      <div class="step-3-section-2">
+      <div class="step-4-section-2">
         <div class="d-flex align-center">
           <v-icon color="mibancoprimary" class="mr-2">mdi-cart-outline</v-icon>
           <span class="mibancoprimary--text">Mi negocio</span>
         </div>
       </div>
-      <div class="step-3-section-3">
+      <div class="step-4-section-3">
         <div>
           <label class="mb-1 font-weight-medium" style="font-size: 14px;">Ocupación o profesión*</label>
           <v-text-field
@@ -368,7 +368,7 @@
           </v-select>
         </div>
       </div>
-      <div class="step-3-section-4">
+      <div class="step-4-section-4">
         <div class="d-flex flex-row">
           <v-checkbox
             class="mt-0"
@@ -464,7 +464,7 @@ export default {
 </script>
 
 <style lang="scss">
-.step-3{
+.step-4{
   &-section-1{
     border: 2px solid rgba(233, 247, 237, 1);
     display: flex;

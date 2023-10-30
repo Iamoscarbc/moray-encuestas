@@ -2,7 +2,7 @@
   <div class="card-steps text-left mt-4 mb-4" :class="'step-'+step">
     <div class="d-flex flex-column" style="gap: 8px;">
         <span class="mibancoprimary--text font-weight-bold">Paso {{ step }} de 4 😊</span>
-        <span class="mibancoaccent--text font-weight-bold" style="font-size: 18px;">Completa tu <br>información personal</span>
+        <span class="mibancoaccent--text font-weight-bold" style="font-size: 18px;" v-html="text"></span>
     </div>
     <img src="@/assets/svg/Comerciante-Mibanco-Movil.svg" v-if="step == 1">
   </div>
@@ -10,7 +10,7 @@
 
 <script>
 export default {
-    props: ["step"]
+    props: ["step", "text"]
 }
 </script>
 

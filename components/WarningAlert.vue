@@ -1,6 +1,6 @@
 <template>
   <div class="card-warning-alert mb-4">
-    <span>Recuerda: Este formulario es solo una prueba y NO AFECTARÁ ningún dato <br>que tenga registrado en Mibanco</span>
+    <span>Este formulario es una prueba.</span>
   </div>
 </template>
 
@@ -12,7 +12,7 @@ export default {
 
 <style lang="scss">
     .card-warning-alert{
-        background-color: rgba(255, 209, 0, 1);
+        background-color: #FFD1003D;
         padding: 10px;
         text-align: center;
         border-radius: 5px;
