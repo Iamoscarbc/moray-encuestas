@@ -3,7 +3,7 @@
     <v-col cols="12">
       <WarningAlert/>
       <h2 class="mibancoaccent--text text-center">Préstamo Mi efectivo <br>Semilla 💰</h2>
-      <Step :step="4" :text="'Por último, ayúdanos a validar tu negocio'"/>
+      <Step :step="5" :text="'Por último, ayúdanos a validar tu negocio'"/>
       <p v-if="validForm" class="step-4-text-validation">*Para continuar debes subir los siguientes documentos:</p>
       <div class="step-4-section" id="selphie-container">
         <template v-if="!selphie">

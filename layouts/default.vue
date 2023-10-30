@@ -39,4 +39,7 @@ export default {
 .v-input--is-disabled {
   background-color: rgba(226, 230, 235, 1);
 }
+.col-12{
+  padding: 16px;
+}
 </style>
