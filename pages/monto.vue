@@ -5,18 +5,19 @@
       <span style="font-size: 16px;">Escribe el monto que deseas solicitar 💰</span>
       <v-text-field class="mt-5 input-amount" filled placeholder="S/ 2000.00" hide-details type="number" min="100"
         max="2000" v-model="amount"></v-text-field>
-      <v-btn class="mt-5" width="100%" rounded color="mibancoprimary" height="38" @click="$router.push('/oferta')"
+      <v-btn class="mt-5" width="100%" rounded color="mibancoprimary" height="38" @click="nextStep()"
         :disabled="!validForm">Continuar</v-btn>
     </v-col>
   </v-row>
 </template>
   
 <script>
+import { mapMutations } from 'vuex'
 export default {
   name: 'IndexPage',
   data() {
     return {
-      amount: '',
+      amount: null,
       validForm: false
     }
   },
@@ -27,6 +28,13 @@ export default {
       }else{
         this.validForm = false
       }
+    }
+  },
+  methods: {
+    ...mapMutations("variables", ['SET_AMOUNT']),
+    nextStep(){
+      this.SET_AMOUNT(Number(this.amount))
+      this.$router.push('/oferta')
     }
   }
 }
