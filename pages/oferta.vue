@@ -4,7 +4,7 @@
         <GoBack />
         <h2 class="mb-4">¿Cuánto es el monto<br>que deseas solicitar?</h2>
         <span style="font-size: 16px;">Escribe el monto que deseas solicitar 💰</span>
-        <v-text-field class="mt-5 mb-4 input-amount" filled placeholder="S/ 2000.00" hide-details type="number" min="100" max="2000"></v-text-field>
+        <v-text-field :value="'S/.'+amount" class="mt-5 mb-4 input-amount" filled hide-details disabled></v-text-field>
         <span class="mibancoprimary--text font-weight-bold" @click="$router.back()">Editar monto <v-icon small color="mibancoprimary">mdi-pencil</v-icon></span>
         <h4 class="mt-8">¡Felicidades! 🎉</h4>
         <span class="mibancoprimary--text">Tenemos esta opción para ti 👇</span>
@@ -82,6 +82,7 @@
   </template>
   
   <script>
+  import { mapState } from 'vuex'
   import GoBack from '@/components/GoBack.vue'
   export default {
     name: 'IndexPage',
@@ -93,6 +94,9 @@
             dialog: false,
             dialog2: false
         }
+    },
+    computed: {
+        ...mapState("variables", ['amount'])
     }
   }
   </script>
