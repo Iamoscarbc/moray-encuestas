@@ -77,7 +77,7 @@
         <p class="mt-4" style="font-size: 10px; font-weight: 400; color: #495057;">Este canal está habilitado solo para personas que no presentan relación alguna con PEP (Persona expuesta políticamente), ni empresas dirigidas por este tipo de persona. De ser tu caso por favor acércate a la Agencia más cercana.</p>
         <img src="@/assets/img/TCEA.png" width="100%">
       </div>
-      <CardSeguros/>
+      <CardSeguros :sureProp="sureProp" @changeSure="changeSure"/>
       <div class="d-flex flex-column" style="gap: 8px;">
         <v-btn rounded color="mibancoprimary" height="38" @click="validateForm()">Enviar Solicitud</v-btn>
       </div>
@@ -101,7 +101,8 @@ export default {
       urlPaymentSelphie: [],
       validForm: false,
       tyc: false,
-      udp: false
+      udp: false,
+      sureProp: null
     }
   },
   methods: {
@@ -154,7 +155,7 @@ export default {
         this.validForm = true
       }
 
-      if(!this.tyc || !this.udp){
+      if(!this.tyc || !this.udp || this.sureProp == null){
         return
       }
       
@@ -162,7 +163,9 @@ export default {
         this.validForm = false
         this.$router.push('paso-5')
       }
-
+    },
+    changeSure(val){
+      this.sureProp = val
     }
   }
 }
