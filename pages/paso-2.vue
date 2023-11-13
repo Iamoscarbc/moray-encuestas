@@ -225,14 +225,14 @@
       </div>
       <div class="d-flex flex-row" style="gap: 16px;">
         <v-btn width="48%" rounded color="mibancoprimary" outlined height="38" @click="$router.back()">Volver</v-btn>
-        <v-btn width="48%" rounded color="mibancoprimary" height="38" @click="$router.push(valueTypeActivity == 'Tengo un Negocio' ? 'paso-3' : 'paso-3-dependiente')">Continuar</v-btn>
+        <v-btn width="48%" rounded color="mibancoprimary" height="38" @click="nextStep()" :disabled="!date">Continuar</v-btn>
       </div>
     </v-col>
   </v-row>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import WarningAlert from '@/components/WarningAlert.vue'
 import Step from '@/components/Step.vue'
 import RadioCustom from '@/components/RadioCustom.vue'
@@ -291,6 +291,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations("variables", ['SET_BIRTHDATE']),
     changeValueEC($event){
       this.valueEC = $event
     },
@@ -309,6 +310,10 @@ export default {
     save (date) {
       this.$refs.menu.save(date)
     },
+    nextStep(){
+      this.SET_BIRTHDATE(this.dateFormatted)
+      this.$router.push(this.valueTypeActivity == 'Tengo un Negocio' ? 'paso-3' : 'paso-3-dependiente')
+    }
   },
   computed:{
     ...mapState("variables", ['amount']),

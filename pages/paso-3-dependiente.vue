@@ -222,6 +222,7 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 import WarningAlert from '@/components/WarningAlert.vue'
 import Step from '@/components/Step.vue'
 import RadioCustom from '@/components/RadioCustom.vue'
@@ -268,6 +269,7 @@ export default {
     },
   },
   computed:{
+    ...mapState("variables", ['amount']),
     dateFormatted(){
       return this.dateInitBuss ? this.$moment(this.dateInitBuss).format('DD/MM/YYYY') : ''
     }
