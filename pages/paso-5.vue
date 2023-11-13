@@ -1,57 +1,68 @@
 <template>
-  <v-row justify="center" align="center">
+  <v-row justify="center" align="center" class="step-5">
     <v-col cols="12">
       <WarningAlert/>
-      <h2 class="mibancoaccent--text text-center">Préstamo Mi efectivo <br>Semilla 💰</h2>
-      <Step :step="5" :text="'Por último, ayúdanos a validar tu negocio'"/>
-      <p v-if="validForm" class="step-4-text-validation">*Para continuar debes subir los siguientes documentos:</p>
-      <div class="step-4-section" id="selphie-container">
-        <template v-if="!selphie">
-          <img src="@/assets/svg/Camera.svg" width="80">
-          <span class="section-1-title">Tómate una foto selfie con tu negocio o mercadería</span>
-          <span class="section-1-description">Asegúrate de que sea de alta calidad y que represente fielmente a tu negocio.</span>
-          <v-btn rounded color="mibancoprimary" outlined height="38" width="100%" @click="openCamera()">Tomar foto</v-btn>
-          <input type="file" accept="image/*" capture="camera" ref="fileCamera" @change="changeFileCamera" style="display: none;">
-        </template>
-        <template v-else>
-          <img src="@/assets/svg/UploadSuccess.svg" width="80">
-          <span class="section-1-title">¡Foto subida con <br>éxito!</span>
-          <div class="section-1-preview-image">
-            <img :src="urlSelphie">
-            <div class="section-1-preview-image-options">
-              <span>Selfiedecomercio.jpg</span>
-              <span class="section-1-preview-image-delete" @click="deleteImage()"><img src="@/assets/svg/cerrar.svg" width="24">Eliminar foto</span>
-            </div>
-          </div>
-        </template>
-      </div>
-      <div class="step-4-section" id="payment-slips-container">
-        <template v-if="!paymentSlips || paymentSlips.length == 0">
-          <img src="@/assets/svg/PaymentSlip.svg" width="80">
-          <span class="section-1-title">Sube 2 boletas o <br>facturas de tu negocio</span>
-          <span class="section-1-description">Los formatos deben ser JPG o PDF.</span>
-          <v-btn rounded color="mibancoprimary" outlined height="38" width="100%" @click="openFileManager()">Subir boleta</v-btn>
-          <input type="file" accept=".jpg, .jpeg, .pdf" multiple ref="fileManager" @change="changeFileManager" style="display: none;">
-        </template>
-        <template v-else>
-          <img src="@/assets/svg/WarningPaymentSlip.svg" width="80" v-if="paymentSlips.length == 1">
-          <span class="section-1-title" v-if="paymentSlips.length == 1">Te falta subir 1 boleta o factura más de tu negocio.</span>
-          <img src="@/assets/svg/UploadSuccess.svg" width="80" v-if="paymentSlips.length == 2">
-          <span class="section-1-title" v-if="paymentSlips.length == 2">¡Boletas/facturas subidas<br>con éxito!</span>
-          <div class="section-1-preview-image" v-for="(f, i) in paymentSlips">
-            <img :src="urlPaymentSelphie[i]" v-if="f.type == 'image/jpeg'">
-            <img src="@/assets/img/defaultPaymentSlip.png" v-else>
-            <div class="section-1-preview-image-options">
-              <span>boleta{{ i+1 }}.{{ f.type.split('/')[1] }}</span>
-              <span class="section-1-preview-image-delete" @click="deleteImageFM(i)"><img src="@/assets/svg/cerrar.svg" width="24">Eliminar foto</span>
-            </div>
-          </div>
-          <v-btn rounded color="mibancoprimary" outlined height="38" width="100%" @click="openFileManager()" v-if="paymentSlips.length != 2">Subir boleta</v-btn>
-          <input type="file" accept=".jpg, .jpeg, .pdf" multiple ref="fileManager" @change="changeFileManager" style="display: none;" v-if="paymentSlips.length != 2">
-        </template>
-      </div>
       <div class="d-flex flex-column" style="gap: 8px;">
-        <v-btn rounded color="mibancoprimary" height="38" @click="validateForm()">Enviar Solicitud</v-btn>
+        <div class="d-flex justify-center">
+          <img src="@/assets/svg/document-check.svg" width="120">
+        </div>
+        <h2 class="mibancoprimary--text text-center" style="font-size: 21px;">¡Mariella, este es el resumen<br>de tu solicitud!</h2>
+        <span class="text-center mb-2" style="font-size: 12px; letter-spacing: 0.7px;">Revisa que todos tu datos estén correctos, de no ser asi puedes editarlos antes de enviar tu solicitud.</span>
+        <div class="d-flex justify-end">
+          <v-btn color="mibancoprimary" height="40" outlined @click="formDisabled = !formDisabled">Editar
+            <v-icon>mdi-pencil-outline</v-icon>
+          </v-btn>
+        </div>
+        <span v-if="!formDisabled" style="text-align: center; color: #231F20; font-size: 12px; font-weight: 600;" @click="clickInput()">Elige el campo que deseas editar 👇</span>
+        <v-form class="d-flex flex-column mb-4" style="gap: 8px">
+          <div class="input-custom" :disabled="formDisabled">
+            <label for="amount">Monto</label>
+            <input v-model="form.amount" id="amount" :disabled="formDisabled">
+          </div>
+          <div>
+            <v-dialog
+              v-model="dialogQuotas"
+              width="350">
+              <template v-slot:activator="{ on, attrs }">
+                <div class="input-custom" :disabled="formDisabled"
+                  v-bind="attrs"
+                  v-on="!formDisabled ? on : false">
+                  <label for="quotas">N° de Cuotas</label>
+                  <span>{{ form.quotas }}</span>
+                </div>
+              </template>
+              <v-card>
+                  <v-card-title class="d-flex justify-space-between px-4" @click="dialogQuotas=false">
+                    <h5>Número de hijos</h5>
+                    <v-icon>mdi-close</v-icon>
+                  </v-card-title>
+                  <v-card-text class="px-4">
+                    <RadioCustom @changeValue="changeValueQuotas" :dataRadio="dataQuotas" :value="form.quotas"/>
+                  </v-card-text>
+              </v-card>
+            </v-dialog>
+          </div>
+          <div class="input-custom" :disabled="formDisabled" @click="clickInput">
+            <label for="names">Nombres</label>
+            <input v-model="form.names" id="names" disabled>
+          </div>
+          <div class="input-custom" :disabled="formDisabled">
+            <label for="lastNameP">Apellido Paterno</label>
+            <input v-model="form.lastNameP" id="lastNameP" disabled>
+          </div>
+          <div class="input-custom" :disabled="formDisabled">
+            <label for="lastNameM">Apellido Materno</label>
+            <input v-model="form.lastNameM" id="lastNameM" disabled>
+          </div>
+          <div class="input-custom" :disabled="formDisabled">
+            <label for="birthDate">Fecha de Nacimiento</label>
+            <input v-model="form.birthDate" id="birthDate" disabled>
+          </div>
+        </v-form>
+        <div class="d-flex flex-row justify-space-between">
+          <v-btn rounded color="mibancoprimary" height="38" width="120" @click="cancel()" outlined>Cancelar</v-btn>
+          <v-btn rounded color="mibancoprimary" height="38" width="185" @click="sendForm()">Actualizar y enviar</v-btn>
+        </div>
       </div>
     </v-col>
   </v-row>
@@ -67,143 +78,72 @@ export default {
   },
   data(){
     return {
-      selphie: null,
-      urlSelphie: null,
-      paymentSlips: [],
-      urlPaymentSelphie: [],
-      validForm: false
+      formDisabled: true,
+      form: {
+        amount: 'S/. 1,000',
+        quotas: 6,
+        names: 'Mariella',
+        lastNameP: 'Yauri',
+        lastNameM: 'Castro',
+        birthDate: '11/12/1988'
+      },
+      dialogQuotas: false,
+      dataQuotas: [
+        {label: '01', value: "01"},
+        {label: '02', value: "02"},
+        {label: '03', value: "03"},
+        {label: '04', value: "04"},
+        {label: '05', value: "05"},
+        {label: '06', value: "06"},
+        {label: '07', value: "07"},
+        {label: '08', value: "08"},
+        {label: '09', value: "09"},
+        {label: '10', value: "10"},
+        {label: '11', value: "11"},
+        {label: '12', value: "12"}
+      ]
     }
   },
   methods: {
-    openCamera(){
-      this.$refs.fileCamera.click()
+    changeValueQuotas($event){
+      this.form.quotas = $event
     },
-    changeFileCamera($event){
-      this.selphie = $event.target.files[0]
-      this.urlSelphie = URL.createObjectURL(this.selphie)
-        let sc = document.getElementById("selphie-container")
-        sc.style.borderColor = null
+    clickInput(){
+      console.log("firts input")
     },
-    deleteImage(){
-      this.selphie = null
-      this.urlSelphie = null
+    cancel() {
+      this.$router.back()
     },
-    openFileManager(){
-      this.$refs.fileManager.click()
+    sendForm() {
+      this.$router.push('/paso-6')
     },
-    changeFileManager($event){
-      if($event.target.files.length != 2){
-        console.log("Debes cargar 2 boletas")
-        return
-      }
-      this.paymentSlips = []
-      this.urlPaymentSelphie = []
-      for (let i = 0; i < $event.target.files.length; i++) {
-        const element = $event.target.files[i];
-        this.paymentSlips.push(element)
-        this.urlPaymentSelphie.push(URL.createObjectURL(element))        
-      }
-      let ps = document.getElementById("payment-slips-container")
-      ps.style.borderColor = null
-      console.log("this.paymentSlips", this.paymentSlips)
-    }, 
-    deleteImageFM(i){
-      this.paymentSlips.splice(i, 1)
-      this.urlPaymentSelphie.splice(i, 1)
-    },
-    validateForm(){
-      if(!this.selphie){
-        let sc = document.getElementById("selphie-container")
-        sc.style.borderColor = '#EB5757'
-        this.validForm = true
-      }
-
-      if(this.paymentSlips.length != 2){
-        let ps = document.getElementById("payment-slips-container")
-        ps.style.borderColor = '#EB5757'
-        this.validForm = true
-      }
-      
-      if(!!this.selphie && this.paymentSlips.length == 2){
-        this.validForm = false
-        this.$router.push('paso-5')
-      }
-
-    }
   }
 }
 </script>
 
 <style lang="scss">
-.step-4{
-  &-text-validation{
-    color: #EB5757;
-    font-size: 14px;
-    font-weight: 400;
-    text-align: center;
-    letter-spacing: 0.75px;
-  }
-  &-section{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    padding: 16px;
-    margin-bottom: 16px;
-    border: 1px solid #C8C9DD;
+.step-5{
+  .input-custom{
     border-radius: 8px;
-    .section-1{
-      &-title{
-        font-weight: 700;
-        color: #495057;
-        font-size: 16px;
-        text-align: center;
-        margin-top: 8px;
-        letter-spacing: 1px;
-      }
-      &-description{
-        font-weight: 400;
-        color: #76808A;
-        font-size: 15px;
-        margin-top: 8px;
-        letter-spacing: 1px;
-      }
-      &-preview-image{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        gap: 8px;
-        padding: 0px 7px;
-        img{
-          width: 135px;
-          height: 94px;
-          border-radius: 16px;
-        }
-        &-options{
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          span{
-            color: #000000;
-            font-size: 14px;
-            font-weight: 400;
-          }
-        }
-        &-delete{
-          display: flex;
-          align-items: center;
-          color: #009530 !important;
-          gap: 4px;
-          &:hover{
-            text-decoration: underline;
-          }
-          img{
-            width: 24px;
-            height: 24px;
-            border-radius: 0;
-          }
-        }
-      }
+    height: 32px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #151D18;
+    border: 1px solid #C8C9DD;
+    &[disabled]{
+      background: #F9FAFA;
+      border: none;
+    }
+    input{
+      text-align: right;
+      text-decoration: none;
+      height: 100%;
+      outline: none;
     }
   }
 }

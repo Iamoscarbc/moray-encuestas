@@ -62,7 +62,8 @@ export default {
           success: colors.green.accent3,
           mibancoprimary: '#009530',
           mibancosecondary: '#FFD100',
-          mibancoaccent: '#009FF9'
+          mibancoaccent: '#009FF9',
+          mibancoorange: '#F39000'
         }
       }
     }
