@@ -1,6 +1,6 @@
 <template>
     <v-app-bar height="64" color="mibancoprimary" fixed app>
-        <img src="https://www.yevo.pe/assets/img/logo_negativo.png" width="56">
+        <img src="@/assets/img/yevo_logo.png" width="56">
         <v-spacer />
         <v-btn icon>
             <v-icon color="white">mdi-menu</v-icon>
