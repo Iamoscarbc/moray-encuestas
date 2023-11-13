@@ -368,36 +368,8 @@
           </v-select>
         </div>
       </div>
-      <div class="step-3-section-4">
-        <div class="d-flex flex-row">
-          <v-checkbox
-            class="mt-0"
-            v-model="tyc"
-            color="mibancoprimary"
-            hide-details
-          >
-            <template v-slot:label>
-              <span style="font-size: 14px;">Acepto los <span class="mibancoprimary--text text-underline">tratamientos de mis datos personales términos</span> y condiciones del <br>préstamo Mi efectivo Semilla.</span>
-            </template>
-          </v-checkbox>
-        </div>
-        <div class="d-flex flex-row">
-          <v-checkbox
-            v-model="udp"
-            color="mibancoprimary"
-            hide-details
-          >
-            <template v-slot:label>
-              <span style="font-size: 14px;">Acepto el <span class="mibancoprimary--text text-underline">uso de mis datos personales.</span></span>
-            </template>
-          </v-checkbox>
-        </div>
-        <p class="mt-4" style="font-size: 10px; font-weight: 400; color: #495057;">Este canal está habilitado solo para personas que no presentan relación alguna con PEP (Persona expuesta políticamente), ni empresas dirigidas por este tipo de persona. De ser tu caso por favor acércate a la Agencia más cercana.</p>
-        <img src="@/assets/img/TCEA.png" width="100%">
-      </div>
-      <CardSeguros/>
       <div class="d-flex flex-column" style="gap: 8px;">
-        <v-btn rounded color="mibancoprimary" height="38" @click="$router.push('/paso-4')">Enviar Solicitud</v-btn>
+        <v-btn rounded color="mibancoprimary" height="38" @click="$router.push('/paso-4')">Continuar</v-btn>
         <v-btn rounded color="mibancoprimary" outlined height="38" @click="$router.back()">Volver</v-btn>
       </div>
     </v-col>
