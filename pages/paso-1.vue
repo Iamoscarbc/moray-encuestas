@@ -8,7 +8,10 @@
         <div>
           <label class="mb-1 font-weight-medium" style="font-size: 14px;">Monto a solicitar*</label>
           <v-text-field
-            label="S/ 2000"
+            color="mibancoprimary"
+            prefix="S/."
+            v-model="amount"
+            disabled
             height="48"
             single-line
             hide-details
@@ -106,6 +109,7 @@
         <div>
           <label class="mb-1 font-weight-medium" style="font-size: 14px;">Nombres* </label>
           <v-text-field
+            v-model="form.name"
             label="Ingresa tu nombre completo"
             height="48"
             single-line
@@ -120,6 +124,7 @@
         <div>
           <label class="mb-1 font-weight-medium" style="font-size: 14px;">Apellido paterno*</label>
           <v-text-field
+            v-model="form.lastNameP"
             label="Ingresa tu apellido paterno"
             height="48"
             single-line
@@ -134,6 +139,7 @@
         <div>
           <label class="mb-1 font-weight-medium" style="font-size: 14px;">Apellido materno*</label>
           <v-text-field
+            v-model="form.lastNameM"
             label="Ingresa tu apellido materno"
             height="48"
             single-line
@@ -158,19 +164,43 @@
           </v-text-field>
         </div>
       </div>
-      <v-btn width="100%" rounded color="mibancoprimary" height="38" @click="$router.push('/paso-2')">Continuar</v-btn>
+      <v-btn width="100%" rounded color="mibancoprimary" height="38" @click="nextStep()" :disabled="!validForm">Continuar</v-btn>
     </v-col>
   </v-row>
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 import WarningAlert from '@/components/WarningAlert.vue'
 import Step from '@/components/Step.vue'
 export default {
-    components: {
-      WarningAlert,
-      Step
+  components: {
+    WarningAlert,
+    Step
+  },
+  data(){
+    return {
+      form: {
+        name: '',
+        lastNameM: '',
+        lastNameP: '',
+        birthdate: ''
+      }
     }
+  },
+  computed: {
+    ...mapState("variables", ['amount']),
+    validForm(){
+      return !!this.form.name && !!this.form.lastNameP && !!this.form.lastNameM
+    }
+  },
+  methods: {
+    ...mapMutations("variables", ['SET_FORM']),
+    nextStep(){
+      this.SET_FORM(this.form)
+      this.$router.push('/paso-2')
+    }
+  }
 }
 </script>
 

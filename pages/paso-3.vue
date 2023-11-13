@@ -9,7 +9,9 @@
           <label class="mb-1 font-weight-medium" style="font-size: 14px;">Monto a solicitar*</label>
           <v-text-field
             color="mibancoprimary"
-            label="S/ 2000"
+            prefix="S/."
+            v-model="amount"
+            disabled
             height="48"
             single-line
             hide-details

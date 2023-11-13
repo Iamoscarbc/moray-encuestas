@@ -8,7 +8,10 @@
         <div>
           <label class="mb-1 font-weight-medium" style="font-size: 14px;">Monto a solicitar*</label>
           <v-text-field
-            label="S/ 2000"
+            color="mibancoprimary"
+            prefix="S/."
+            v-model="amount"
+            disabled
             height="48"
             single-line
             hide-details
@@ -229,6 +232,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import WarningAlert from '@/components/WarningAlert.vue'
 import Step from '@/components/Step.vue'
 import RadioCustom from '@/components/RadioCustom.vue'
@@ -307,6 +311,7 @@ export default {
     },
   },
   computed:{
+    ...mapState("variables", ['amount']),
     dateFormatted(){
       return this.date ? this.$moment(this.date).format('DD/MM/YYYY') : ''
     }
