@@ -222,7 +222,7 @@
       </div>
       <div class="d-flex flex-row" style="gap: 16px;">
         <v-btn width="48%" rounded color="mibancoprimary" outlined height="38" @click="$router.back()">Volver</v-btn>
-        <v-btn width="48%" rounded color="mibancoprimary" height="38" @click="$router.push('/paso-3')">Continuar</v-btn>
+        <v-btn width="48%" rounded color="mibancoprimary" height="38" @click="$router.push(valueTypeActivity == 'Tengo un Negocio' ? 'paso-3' : 'paso-3-dependiente')">Continuar</v-btn>
       </div>
     </v-col>
   </v-row>

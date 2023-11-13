@@ -1,5 +1,5 @@
 <template>
-    <div class="card-sures">
+    <div class="card-sures" id="card-sures">
         <div class="card-sures-first">
             <div class="container-card-title">
                 <div class="card-title">
