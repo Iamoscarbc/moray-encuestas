@@ -6,7 +6,7 @@
         <div class="d-flex justify-center">
           <img src="@/assets/svg/document-check.svg" width="120">
         </div>
-        <h2 class="mibancoprimary--text text-center" style="font-size: 21px;">¡Mariella, este es el resumen<br>de tu solicitud!</h2>
+        <h2 class="mibancoprimary--text text-center" style="font-size: 21px;">¡<span style="text-transform: capitalize;">{{form.name}}</span>, este es el resumen<br>de tu solicitud!</h2>
         <span class="text-center mb-2" style="font-size: 12px; letter-spacing: 0.7px;">Revisa que todos tu datos estén correctos, de no ser asi puedes editarlos antes de enviar tu solicitud.</span>
         <div class="d-flex justify-end">
           <v-btn color="mibancoprimary" height="40" outlined @click="formDisabled = !formDisabled">Editar
