@@ -17,7 +17,7 @@
         <v-form class="d-flex flex-column mb-4" style="gap: 8px">
           <div class="input-custom" :disabled="formDisabled">
             <label for="amount">Monto</label>
-            <input v-model="form.amount" id="amount" :disabled="formDisabled">
+            <input v-model="formLocal.amount" id="amount" :disabled="formDisabled">
           </div>
           <div>
             <v-dialog
@@ -28,7 +28,7 @@
                   v-bind="attrs"
                   v-on="!formDisabled ? on : false">
                   <label for="quotas">N° de Cuotas</label>
-                  <span>{{ form.quotas }}</span>
+                  <span>{{ formLocal.quotas }}</span>
                 </div>
               </template>
               <v-card>
@@ -37,14 +37,14 @@
                     <v-icon>mdi-close</v-icon>
                   </v-card-title>
                   <v-card-text class="px-4">
-                    <RadioCustom @changeValue="changeValueQuotas" :dataRadio="dataQuotas" :value="form.quotas"/>
+                    <RadioCustom @changeValue="changeValueQuotas" :dataRadio="dataQuotas" :value="formLocal.quotas"/>
                   </v-card-text>
               </v-card>
             </v-dialog>
           </div>
           <div class="input-custom" :disabled="formDisabled" @click="clickInput">
             <label for="names">Nombres</label>
-            <input v-model="form.names" id="names" disabled>
+            <input v-model="form.name" id="names" disabled>
           </div>
           <div class="input-custom" :disabled="formDisabled">
             <label for="lastNameP">Apellido Paterno</label>
@@ -56,7 +56,7 @@
           </div>
           <div class="input-custom" :disabled="formDisabled">
             <label for="birthDate">Fecha de Nacimiento</label>
-            <input v-model="form.birthDate" id="birthDate" disabled>
+            <input v-model="form.birthdate" id="birthDate" disabled>
           </div>
         </v-form>
         <div class="d-flex flex-row justify-space-between">
@@ -69,6 +69,7 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 import WarningAlert from '@/components/WarningAlert.vue'
 import Step from '@/components/Step.vue'
 export default {
@@ -79,13 +80,9 @@ export default {
   data(){
     return {
       formDisabled: true,
-      form: {
+      formLocal: {
         amount: 'S/. 1,000',
-        quotas: 6,
-        names: 'Mariella',
-        lastNameP: 'Yauri',
-        lastNameM: 'Castro',
-        birthDate: '11/12/1988'
+        quotas: 6
       },
       dialogQuotas: false,
       dataQuotas: [
@@ -104,9 +101,12 @@ export default {
       ]
     }
   },
+  computed: {
+    ...mapState("variables", ['form', 'amount', 'quotas']),
+  },
   methods: {
     changeValueQuotas($event){
-      this.form.quotas = $event
+      this.formLocal.quotas = $event
     },
     clickInput(){
       console.log("firts input")
@@ -117,6 +117,9 @@ export default {
     sendForm() {
       this.$router.push('/paso-6')
     },
+  },
+  mounted(){
+    this.formLocal.amount = this.amount
   }
 }
 </script>

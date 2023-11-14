@@ -21,9 +21,10 @@
         <div>
           <label class="mb-1 font-weight-medium" style="font-size: 14px;">Plazo de pago de préstamo (en meses)*</label>
           <v-select
-            :items="['3 meses', '6 meses', '9 meses', '12 meses']"
+            :items="[3, 6, 9, 12]"
+            suffix="meses"
             height="48"
-            label="12 meses"
+            v-model="quotasComputed"
             single-line
             hide-details
             outlined
@@ -189,13 +190,21 @@ export default {
     }
   },
   computed: {
-    ...mapState("variables", ['amount']),
+    ...mapState("variables", ['amount', 'quotas']),
     validForm(){
       return !!this.form.name && !!this.form.lastNameP && !!this.form.lastNameM
+    },
+    quotasComputed:{
+      get(){
+        return this.quotas
+      },
+      set(newVal){
+        this.SET_QUOTAS(newVal)
+      }
     }
   },
   methods: {
-    ...mapMutations("variables", ['SET_FORM']),
+    ...mapMutations("variables", ['SET_FORM', 'SET_QUOTAS']),
     nextStep(){
       this.SET_FORM(this.form)
       this.$router.push('/paso-2')

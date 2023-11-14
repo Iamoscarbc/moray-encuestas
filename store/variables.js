@@ -1,6 +1,7 @@
 const state = () => {
     return {
         amount: null,
+        quotas: null,
         form: {
             name: '',
             lastNameP: '',
@@ -19,6 +20,9 @@ const mutations = {
     },
     SET_BIRTHDATE(state, data) {
         state.form.birthdate = data
+    },
+    SET_QUOTAS(state, data) {
+        state.quotas = data
     }
 }
 
