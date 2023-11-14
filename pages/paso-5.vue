@@ -17,7 +17,7 @@
         <v-form class="d-flex flex-column mb-4" style="gap: 8px">
           <div class="input-custom" :disabled="formDisabled">
             <label for="amount">Monto</label>
-            <input v-model="formLocal.amount" id="amount" :disabled="formDisabled">
+            <input v-model="amountComputed" id="amount" :disabled="formDisabled" min="100" max="2000">
           </div>
           <div>
             <v-dialog
@@ -28,16 +28,16 @@
                   v-bind="attrs"
                   v-on="!formDisabled ? on : false">
                   <label for="quotas">N° de Cuotas</label>
-                  <span>{{ formLocal.quotas }}</span>
+                  <span v-text="quotasComputed"></span>
                 </div>
               </template>
               <v-card>
                   <v-card-title class="d-flex justify-space-between px-4" @click="dialogQuotas=false">
-                    <h5>Número de hijos</h5>
+                    <h5>Número de cuotas</h5>
                     <v-icon>mdi-close</v-icon>
                   </v-card-title>
                   <v-card-text class="px-4">
-                    <RadioCustom @changeValue="changeValueQuotas" :dataRadio="dataQuotas" :value="formLocal.quotas"/>
+                    <RadioCustom @changeValue="changeValueQuotas" :dataRadio="dataQuotas" :value="quotas"/>
                   </v-card-text>
               </v-card>
             </v-dialog>
@@ -80,33 +80,47 @@ export default {
   data(){
     return {
       formDisabled: true,
-      formLocal: {
-        amount: 'S/. 1,000',
-        quotas: 6
-      },
       dialogQuotas: false,
       dataQuotas: [
-        {label: '01', value: "01"},
-        {label: '02', value: "02"},
-        {label: '03', value: "03"},
-        {label: '04', value: "04"},
-        {label: '05', value: "05"},
-        {label: '06', value: "06"},
-        {label: '07', value: "07"},
-        {label: '08', value: "08"},
-        {label: '09', value: "09"},
-        {label: '10', value: "10"},
-        {label: '11', value: "11"},
-        {label: '12', value: "12"}
+        {label: '01', value: 1},
+        {label: '02', value: 2},
+        {label: '03', value: 3},
+        {label: '04', value: 4},
+        {label: '05', value: 5},
+        {label: '06', value: 6},
+        {label: '07', value: 7},
+        {label: '08', value: 8},
+        {label: '09', value: 9},
+        {label: '10', value: 10},
+        {label: '11', value: 11},
+        {label: '12', value: 12}
       ]
     }
   },
   computed: {
     ...mapState("variables", ['form', 'amount', 'quotas']),
+    quotasComputed:{
+      get(){
+        return this.quotas
+      },
+      set(newVal){
+        this.SET_QUOTAS(Number(newVal))
+      }
+    },
+    amountComputed:{
+      get(){
+        return this.amount
+      },
+      set(newVal){
+        this.SET_AMOUNT(Number(newVal))
+      }
+    }
   },
   methods: {
+    ...mapMutations("variables",['SET_QUOTAS','SET_AMOUNT']),
     changeValueQuotas($event){
-      this.formLocal.quotas = $event
+      console.log("changeValueQuotas", $event)
+      this.quotasComputed = $event
     },
     clickInput(){
       console.log("firts input")
@@ -117,9 +131,6 @@ export default {
     sendForm() {
       this.$router.push('/paso-6')
     },
-  },
-  mounted(){
-    this.formLocal.amount = this.amount
   }
 }
 </script>
