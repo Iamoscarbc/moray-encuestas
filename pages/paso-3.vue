@@ -41,7 +41,7 @@
           <label class="mb-1 font-weight-medium" style="font-size: 14px;">Giro o actividad comercial*</label>
           <v-select
             color="mibancoprimary"
-            :items="['3 meses', '6 meses', '9 meses', '12 meses']"
+            :items="['Bodega y/o Tienda', 'Servicio Taxi', 'Venta de Alimentos']"
             height="48"
             label="Selecciona tu opción aquí"
             single-line
@@ -357,7 +357,7 @@
           <label class="mb-1 font-weight-medium" style="font-size: 14px;">¿En qué horario te podemos contactar?</label>
           <v-select
             color="mibancoprimary"
-            :items="['Lima']"
+            :items="['Mañana','Tarde','Noche']"
             height="48"
             label="Selecciona tu opción aquí"
             single-line
