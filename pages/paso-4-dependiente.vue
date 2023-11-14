@@ -91,12 +91,9 @@ export default {
       this.$refs.fileManager.click()
     },
     changeFileManager($event){
-      if($event.target.files.length != 1){
-        console.log("Debes cargar 1 boletas")
+      if(this.paymentSlips.length == 1){
         return
       }
-      this.paymentSlips = []
-      this.urlPaymentSelphie = []
       for (let i = 0; i < $event.target.files.length; i++) {
         const element = $event.target.files[i];
         this.paymentSlips.push(element)

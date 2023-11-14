@@ -123,16 +123,17 @@ export default {
       this.$refs.fileManager.click()
     },
     changeFileManager($event){
-      if($event.target.files.length != 2){
-        console.log("Debes cargar 2 boletas")
+      if(this.paymentSlips.length == 2){
         return
       }
-      this.paymentSlips = []
-      this.urlPaymentSelphie = []
+      let files = $event.target.files
+      if(this.paymentSlips.length == 1 && $event.target.files.length > 1){
+        files = [$event.target.files[0]]
+      }
       for (let i = 0; i < $event.target.files.length; i++) {
         const element = $event.target.files[i];
         this.paymentSlips.push(element)
-        this.urlPaymentSelphie.push(URL.createObjectURL(element))        
+        this.urlPaymentSelphie.push(URL.createObjectURL(element))
       }
       let ps = document.getElementById("payment-slips-container")
       ps.style.borderColor = null
@@ -155,7 +156,13 @@ export default {
         this.validForm = true
       }
 
-      if(!this.tyc || !this.udp || this.sureProp == null){
+      if(this.sureProp == null){
+        let cs = document.getElementById("card-sures")
+        cs.style.border = '3px solid #EB5757'
+        return
+      }
+
+      if(!this.tyc || !this.udp){
         return
       }
       
