@@ -60,6 +60,7 @@
       <CardSeguros :sureProp="sureProp" @changeSure="changeSure"/>
       <div class="d-flex flex-column" style="gap: 8px;">
         <v-btn rounded color="mibancoprimary" height="38" @click="validateForm()">Enviar Solicitud</v-btn>
+        <v-btn rounded color="mibancoprimary" outlined height="38" @click="$router.back()">Volver</v-btn>
       </div>
     </v-col>
   </v-row>

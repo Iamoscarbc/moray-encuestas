@@ -65,10 +65,7 @@
           ></v-text-field>
         </div>
         <div>
-          <div class="d-flex align-center justify-space-between">
-            <label class="mb-1 font-weight-medium" style="font-size: 14px;">Fecha que iniciaste tu negocio*</label>
-            <v-icon color="mibancoprimary">mdi-information-outline</v-icon>
-          </div>
+          <label class="mb-1 font-weight-medium" style="font-size: 14px;">Fecha que iniciaste tu negocio*</label>
           <v-menu
             ref="menu"
             v-model="menu"
@@ -107,10 +104,7 @@
         </div>
         <h3 class="mibancoprimary--text">Ventas de mi negocio</h3>
         <div>
-          <div class="d-flex align-center justify-space-between">
-            <label class="mb-1 font-weight-medium" style="font-size: 14px;">¿Cada cuánto vendes?*</label>
-            <v-icon color="mibancoprimary">mdi-information-outline</v-icon>
-          </div>
+          <label class="mb-1 font-weight-medium" style="font-size: 14px;">¿Cada cuánto vendes?*</label>
           <v-dialog
             v-model="dialogSales"
             width="350">
@@ -126,14 +120,11 @@
                 hide-details
                 readonly
                 outlined>
-                  <template v-slot:append>
-                    <v-icon>mdi-chevron-down</v-icon>
-                  </template>
               </v-text-field>
             </template>
             <v-card>
                 <v-card-title class="d-flex justify-space-between px-4" @click="dialogSales=false">
-                  <h5>Número de hijos</h5>
+                  <h5>Frecuencia de tus ventas</h5>
                   <v-icon>mdi-close</v-icon>
                 </v-card-title>
                 <v-card-text class="px-4">
@@ -143,7 +134,7 @@
           </v-dialog>
         </div>
         <div>
-          <label class="mb-1 font-weight-medium" style="font-size: 14px;">¿Cuánto vendes <span class="mibancoprimary--text">semanalmente</span>?</label>
+          <label class="mb-1 font-weight-medium" style="font-size: 14px;">¿Cuánto vendes <span class="mibancoprimary--text" style="text-transform: lowercase;">{{valueSales}}</span>?</label>
           <v-text-field
             color="mibancoprimary"
             label="S/. 0.00"
@@ -156,7 +147,7 @@
         <div class="d-flex align-center justify-space-between">
           <h3 class="mibancoprimary--text">Compras de mi negocio</h3>
           <v-dialog
-              v-model="dialogPurchases"
+              v-model="dialogPurchasesInfo"
               width="350"
               >
               <template v-slot:activator="{ on, attrs }">
@@ -166,7 +157,7 @@
               </template>
 
               <v-card>
-                  <v-card-title class="d-flex justify-end pb-0" @click="dialogPurchases=false">
+                  <v-card-title class="d-flex justify-end pb-0" @click="dialogPurchasesInfo=false">
                       <v-icon>mdi-close</v-icon>
                   </v-card-title>
 
@@ -180,22 +171,36 @@
         </div>
         <div>
           <label class="mb-1 font-weight-medium" style="font-size: 14px;">¿Cada cuánto realizas compras para tu negocio en mercadería?*</label>
-          <v-select
-            color="mibancoprimary"
-            :items="['3 meses', '6 meses', '9 meses', '12 meses']"
-            height="48"
-            label="Selecciona tu opción aquí"
-            single-line
-            hide-details
-            outlined
-          >
-            <template v-slot:append>
-              <v-icon>mdi-chevron-down</v-icon>
+          <v-dialog
+            v-model="dialogPurchases"
+            width="350">
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field
+                color="mibancoprimary"
+                :value="valuePurchases"
+                v-bind="attrs"
+                v-on="on"
+                label="Selecciona tu opción aquí"
+                height="48"
+                single-line
+                hide-details
+                readonly
+                outlined>
+              </v-text-field>
             </template>
-          </v-select>
+            <v-card>
+                <v-card-title class="d-flex justify-space-between px-4" @click="dialogPurchases=false">
+                  <h5>Frecuencia de tus compras</h5>
+                  <v-icon>mdi-close</v-icon>
+                </v-card-title>
+                <v-card-text class="px-4">
+                  <RadioCustom @changeValue="changeValuePurchases" :dataRadio="dataPurchases" :value="valuePurchases"/>
+                </v-card-text>
+            </v-card>
+          </v-dialog>
         </div>
         <div>
-          <label class="mb-1 font-weight-medium" style="font-size: 14px;">¿Cuánto compras <span class="mibancoprimary--text">semanalmente</span> para tu negocio en mercadería?*</label>
+          <label class="mb-1 font-weight-medium" style="font-size: 14px;">¿Cuánto compras <span class="mibancoprimary--text" style="text-transform: lowercase;">{{valuePurchases}}</span> para tu negocio en mercadería?*</label>
           <v-text-field
             color="mibancoprimary"
             label="S/. 0.00"
@@ -254,31 +259,7 @@
             outlined
           ></v-text-field>
         </div>
-        <div class="d-flex align-center justify-space-between">
-          <h3 class="mibancoprimary--text">Dirección del negocio</h3>
-          <v-dialog
-              v-model="dialogLocation"
-              width="350"
-              >
-              <template v-slot:activator="{ on, attrs }">
-                <v-icon color="mibancoprimary"
-                  v-bind="attrs"
-                  v-on="on">mdi-information-outline</v-icon>
-              </template>
-
-              <v-card>
-                  <v-card-title class="d-flex justify-end pb-0" @click="dialogLocation=false">
-                      <v-icon>mdi-close</v-icon>
-                  </v-card-title>
-
-                  <v-card-text style="text-align: center">
-                      <img src="@/assets/svg/Error.svg">
-                      <p class="mibancoprimary--text font-weight-bold" style="font-size: 19px; margin-bottom: 48px;">-</p>
-                      <p class="mb-4" style="line-height: normal; color: #151D18; font-size: 16px;">-</p>
-                  </v-card-text>
-              </v-card>
-          </v-dialog>
-        </div>
+        <h3 class="mibancoprimary--text">Dirección del negocio</h3>
         <div>
           <label class="mb-1 font-weight-medium" style="font-size: 14px;">Departamento del negocio*</label>
           <v-select
@@ -357,7 +338,7 @@
           <label class="mb-1 font-weight-medium" style="font-size: 14px;">¿En qué horario te podemos contactar?</label>
           <v-select
             color="mibancoprimary"
-            :items="['Mañana','Tarde','Noche']"
+            :items="['9:30 am - 11:30 am','1:00 pm - 3:00 pm','4:00 pm - 6:00 pm']"
             height="48"
             label="Selecciona tu opción aquí"
             single-line
@@ -406,6 +387,14 @@ export default {
         {label: 'Mensualmente', value: "Mensualmente"}
       ],
       dialogPurchases: false,
+      valuePurchases: 'Diariamente',
+      dataPurchases: [
+        {label: 'Diariamente', value: "Diariamente"},
+        {label: 'Semanalmente', value: "Semanalmente"},
+        {label: 'Quincenalmente', value: "Quincenalmente"},
+        {label: 'Mensualmente', value: "Mensualmente"}
+      ],
+      dialogPurchasesInfo: false,
       dialogExpenses: false,
       dialogLocation: false,
       tyc: false,
@@ -420,6 +409,9 @@ export default {
   methods: {
     changeValueSales($event){
       this.valueSales = $event
+    },
+    changeValuePurchases($event){
+      this.valuePurchases = $event
     },
     save (date) {
       this.$refs.menu.save(date)

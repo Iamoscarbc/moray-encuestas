@@ -6,7 +6,10 @@ const state = () => {
             name: '',
             lastNameP: '',
             lastNameM: '',
-            birthdate: ''
+            birthdate: '',
+            phone: '',
+            email: '',
+            documentNumber: ''
         }
     }
 }

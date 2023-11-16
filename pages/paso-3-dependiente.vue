@@ -200,7 +200,7 @@
           <label class="mb-1 font-weight-medium" style="font-size: 14px;">¿En qué horario te podemos contactar?*</label>
           <v-select
             color="mibancoprimary"
-            :items="['Mañana','Tarde','Noche']"
+            :items="['9:30 am - 11:30 am','1:00 pm - 3:00 pm','4:00 pm - 6:00 pm']"
             height="48"
             label="Selecciona tu opción aquí"
             single-line

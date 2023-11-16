@@ -21,7 +21,7 @@
         <div>
           <label class="mb-1 font-weight-medium" style="font-size: 14px;">Plazo de pago de préstamo (en meses)*</label>
           <v-select
-            :items="[3, 6, 9, 12]"
+            :items="[1,2,3,4,5,6,7,8,9,10,11,12]"
             suffix="meses"
             height="48"
             v-model="quotasComputed"
@@ -57,16 +57,13 @@
           <div style="width: 67%;">
             <label class="mb-1 font-weight-medium" style="font-size: 14px;">Número de DNI*</label>
             <v-text-field
-              label="88888888"
+              :value="form.documentNumber"
               height="48"
               single-line
               hide-details
               disabled
               outlined
             >
-              <template v-slot:append>
-                <v-icon color="mibancoprimary">mdi-information-outline</v-icon>
-              </template>
             </v-text-field>
           </div>
         </div>
@@ -79,15 +76,12 @@
             hide-details
             outlined
           >
-            <template v-slot:append>
-              <v-icon color="mibancoprimary">mdi-information-outline</v-icon>
-            </template>
           </v-text-field>
         </div>
         <div>
           <label class="mb-1 font-weight-medium" style="font-size: 14px;">Número celular*</label>
           <v-text-field
-            label="Ingresa tu número celular"
+            :value="form.phone"
             height="48"
             single-line
             hide-details
@@ -110,52 +104,43 @@
         <div>
           <label class="mb-1 font-weight-medium" style="font-size: 14px;">Nombres* </label>
           <v-text-field
-            v-model="form.name"
+            v-model="formLocal.name"
             label="Ingresa tu nombre completo"
             height="48"
             single-line
             hide-details
             outlined
           >
-            <template v-slot:append>
-              <v-icon color="mibancoprimary">mdi-information-outline</v-icon>
-            </template>
           </v-text-field>
         </div>
         <div>
           <label class="mb-1 font-weight-medium" style="font-size: 14px;">Apellido paterno*</label>
           <v-text-field
-            v-model="form.lastNameP"
+            v-model="formLocal.lastNameP"
             label="Ingresa tu apellido paterno"
             height="48"
             single-line
             hide-details
             outlined
           >
-            <template v-slot:append>
-              <v-icon color="mibancoprimary">mdi-information-outline</v-icon>
-            </template>
           </v-text-field>
         </div>
         <div>
           <label class="mb-1 font-weight-medium" style="font-size: 14px;">Apellido materno*</label>
           <v-text-field
-            v-model="form.lastNameM"
+            v-model="formLocal.lastNameM"
             label="Ingresa tu apellido materno"
             height="48"
             single-line
             hide-details
             outlined
           >
-            <template v-slot:append>
-              <v-icon color="mibancoprimary">mdi-information-outline</v-icon>
-            </template>
           </v-text-field>
         </div>
         <div>
           <label class="mb-1 font-weight-medium" style="font-size: 14px;">Correo electrónico*</label>
           <v-text-field
-            label="ejemplo@ejemplo.com"
+            v-model="form.email"
             height="48"
             single-line
             hide-details
@@ -181,18 +166,21 @@ export default {
   },
   data(){
     return {
-      form: {
+      formLocal: {
         name: '',
-        lastNameM: '',
         lastNameP: '',
-        birthdate: ''
+        lastNameM: '',
+        birthdate: '',
+        phone: '',
+        email: '',
+        documentNumber: ''
       }
     }
   },
   computed: {
-    ...mapState("variables", ['amount', 'quotas']),
+    ...mapState("variables", ['amount', 'quotas', 'form']),
     validForm(){
-      return !!this.form.name && !!this.form.lastNameP && !!this.form.lastNameM
+      return !!this.formLocal.name && !!this.formLocal.lastNameP && !!this.formLocal.lastNameM
     },
     quotasComputed:{
       get(){
@@ -206,7 +194,10 @@ export default {
   methods: {
     ...mapMutations("variables", ['SET_FORM', 'SET_QUOTAS']),
     nextStep(){
-      this.SET_FORM(this.form)
+      this.formLocal.email = this.form.email
+      this.formLocal.phone = this.form.phone
+      this.formLocal.documentNumber = this.form.documentNumber
+      this.SET_FORM(this.formLocal)
       this.$router.push('/paso-2')
     }
   }
