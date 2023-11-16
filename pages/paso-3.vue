@@ -296,7 +296,7 @@
           <label class="mb-1 font-weight-medium" style="font-size: 14px;">Distrito*</label>
           <v-select
             color="mibancoprimary"
-            :items="['Lima']"
+            :items="['Comas','San Juan de Lurigancho']"
             height="48"
             label="Distrito"
             single-line
